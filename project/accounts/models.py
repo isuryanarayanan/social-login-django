@@ -10,6 +10,7 @@ from django.contrib.auth.models import (
     AbstractUser,
 )
 from django.contrib.auth.base_user import BaseUserManager
+from django.conf import settings
 
 AUTH_PROVIDERS = {
     "email": "email",
@@ -33,6 +34,16 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+
+    def create_user_from_google(self, email=None, **extra_fields):
+        """ Method to create a user using google oauth """
+        extra_fields.setdefault(
+            'is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('auth_provider', "google")
+        password = settings.GOOGLE_OAUTH_REGISTER_KEY
+        print("password "+ str(password))
+        return self._create_user(email, password, **extra_fields)
 
     def create_user(self, email=None, password=None, **extra_fields):
         """ Method to create a user """

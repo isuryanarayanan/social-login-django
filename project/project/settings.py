@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-ew3xnd9po)6gfmm2#+=3u07nqv2%^tdyn2+*r!n8g5@uq=6k&a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+
+]
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -42,10 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'accounts.apps.AccountsConfig',
-    'oauth.apps.OauthConfig'
+    'oauth.apps.OauthConfig',
+    'corsheaders'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,7 +135,7 @@ USE_TZ = True
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_SOCIAL_CLIENT_ID')
-
+GOOGLE_OAUTH_REGISTER_KEY = config('GOOGLE_SOCIAL_CLIENT_SECRET')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
