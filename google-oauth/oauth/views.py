@@ -34,23 +34,24 @@ class GoogleOAuthSerializer(serializers.Serializer):
         # Using the information from google,
         # determine if an account exist of not
         try:
-            user = User.objects.get(email=idinfo['email'])
+            user = User.objects.get(email=idinfo['email']) or User.objects.get(
+                username=idinfo['name'])
         except Exception as exc:
             user = None
 
         if not user:
             try:
                 user = User.objects.create_user_from_google(
-                        email=idinfo['email'], username=idinfo['name'])
+                    email=idinfo['email'], username=idinfo['name'])
             except Exception as exc:
-                raise ValueError(exc)
+                raise serializers.ValidationError("Error creation user for this account")
 
         try:
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
             refresh_token = str(refresh)
         except Exception as exc:
-            raise ValueError(exc)
+            raise serializers.ValidationError(exc)
 
         return {
             "oauth_token": "valid",

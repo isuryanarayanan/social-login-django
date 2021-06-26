@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Sign In</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="237734924210-9g6r23vnmpmv1l6jtmfrn8f1tb6ing6o.apps.googleusercontent.com">
-</head>
-<body>
+    <meta
+      name="google-signin-client_id"
+      content="237734924210-9g6r23vnmpmv1l6jtmfrn8f1tb6ing6o.apps.googleusercontent.com"
+    />
+  </head>
+  <body>
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <br/>
-    <input type="button" onclick="signOut();" value="Sign out"/>
-</body>
-<script>
+    <br />
+    <input type="button" onclick="signOut();" value="Sign out" />
+  </body>
+  <script>
     function onSignIn(googleUser) {
-        console.log("Sign in successful! Yay!");
-        let id_token = googleUser.getAuthResponse().id_token;
-			console.log(id_token)
-			
-let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:8000/oauth/google/');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function () {
-            console.log('Signed in as: ' + xhr.responseText);
-        };
-			let send_params = {'oauth_token' : id_token};
-        console.log("Sending: "+send_params);
-        xhr.send(JSON.stringify(send_params));
+      console.log("Sign in successful! Yay!");
+      let id_token = googleUser.getAuthResponse().id_token;
+      console.log(id_token);
 
-
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://localhost:8000/oauth/google/");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function () {
+        console.log("Signed in as: " + xhr.responseText);
+      };
+      let send_params = { oauth_token: id_token };
+      console.log("Sending: " + send_params);
+      xhr.send(JSON.stringify(send_params));
     }
     function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log("User signed out.");
+      });
     }
-</script>
+  </script>
 </html>

@@ -78,7 +78,6 @@ class User(AbstractUser):
     auth_provider = models.CharField(
         max_length=255, blank=True, null=False, default=AUTH_PROVIDERS.get("email")
     )
-    username = models.CharField(max_length=250, unique=False)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
