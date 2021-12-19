@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "dev": "CHOKIDAR_USEPOLLING=true vite",
+    "dev": "CHOKIDAR_USEPOLLING=true vite --host",
     "build": "vite build",
     "serve": "vite preview"
   },
