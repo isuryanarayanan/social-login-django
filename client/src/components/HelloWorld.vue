@@ -41,7 +41,7 @@ export default {
         var id_token = token["id_token"];
         /*console.log("getBasicProfile", googleUser.getAuthResponse());*/
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8001/oauth/google/");
+        xhr.open("POST", "http://alohaasiet.pythonanywhere.com/oauth/google/");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function () {
           console.log("Signed in as: " + xhr.responseText);
